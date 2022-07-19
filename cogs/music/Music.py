@@ -1,7 +1,7 @@
 from utils.DiscordBot import DiscordBot
 
 
-class Main(DiscordBot.Commands.Cog):
+class Music(DiscordBot.Commands.Cog, name="Music"):
     def __init__(self, bot):
         self.bot = bot
         self.is_playing: bool = False
