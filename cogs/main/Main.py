@@ -1,7 +1,7 @@
 from utils.DiscordBot import DiscordBot
 
 
-class Main(DiscordBot.Commands.Cog):
+class Main(DiscordBot.Commands.Cog, name="Main"):
     def __init__(self, bot):
         self.bot = bot
 
