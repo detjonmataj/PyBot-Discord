@@ -1,17 +1,20 @@
 import discord
 from youtube_dl import YoutubeDL
+import asyncio
 
 from utils.DiscordBot import DiscordBot
 
 
 class Music(DiscordBot.Commands.Cog, name="Music"):
     def __init__(self, bot):
-        self.playing: bool = False
         self.bot = bot
+        self.playing: bool = False
+        self.paused: bool = False
         # Using list because I need random access
         self.songs_queue: list = []
         self.current_index: int = 0
         self.vc = None
+        self.loop = asyncio.get_event_loop()
 
     @DiscordBot.Commands.command(help="Ask bot to join your Voice Channel")
     async def join(self, ctx):
@@ -67,6 +70,11 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
 
             self.current_index += 1
 
+            try:
+                asyncio.run_coroutine_threadsafe(self.now_playing(ctx), self.loop)
+            except Exception as ee:
+                print(str(ee))
+
         except Exception as e:
             print(e)
             self.playing = False
@@ -100,3 +108,71 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
                     colour=discord.Colour.blue()
                 )
             )
+
+    @DiscordBot.Commands.command(aliases=["np", "nowplaying"], help="Show the currently playing song")
+    async def now_playing(self, ctx):
+        if self.playing:
+            link = f"https://www.youtube.com/watch?v={self.songs_queue[self.current_index - 1]['id']}"
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Now Playing",
+                    description=f"[{self.songs_queue[self.current_index - 1]['title']}]({link})",
+                    colour=discord.Colour.blue()
+                )
+            )
+        else:
+            await ctx.send("Nothing is playing!")
+
+    @DiscordBot.Commands.command(aliases=["q", "playlist"], help="Show the queue")
+    async def queue(self, ctx):
+        if len(self.songs_queue) == 0:
+            await ctx.send("```nim\nThe queue is empty ;-;\n```")
+            return
+
+        queue_list = "```nim\n"
+
+        for i, song in enumerate(self.songs_queue):
+            index = i + 1
+
+            song_name = f"{index}) {song['title']}"
+
+            if i == self.current_index - 1:
+                song_name = f"\t\t⬐ current track\n{song_name} {'| (paused)' * self.paused}\n\t\t⬑ current track"
+
+            queue_list += f"{song_name}\n"
+
+        queue_list += "\n\t\tThis is the end of the queue!```"
+
+        await ctx.send(queue_list)
+
+    @DiscordBot.Commands.command(aliases=["s"], help="Skip the currently playing song")
+    async def skip(self, ctx):
+        if not self.playing and self.current_index >= len(self.songs_queue):
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.playing = False
+        self.paused = False
+        self.vc.stop()
+
+        await ctx.send("Skipped the current song!")
+
+    @DiscordBot.Commands.command(aliases=[], help="Play a song from YouTube")
+    async def pause(self, ctx):
+        if not self.playing:
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.vc.pause()
+        self.paused = True
+        await ctx.send("Paused the current song!")
+
+    @DiscordBot.Commands.command(aliases=["unpause"], help="Play a song from YouTube")
+    async def resume(self, ctx):
+        if not self.playing:
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.vc.resume()
+        self.paused = False
+        await ctx.send("Resumed the current song!")
