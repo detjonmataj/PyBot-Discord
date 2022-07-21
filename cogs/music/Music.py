@@ -145,3 +145,14 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
         queue_list += "\n\t\tThis is the end of the queue!```"
 
         await ctx.send(queue_list)
+
+    @DiscordBot.Commands.command(aliases=["s"], help="Skip the currently playing song")
+    async def skip(self, ctx):
+        if not self.playing and self.current_index >= len(self.songs_queue):
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.playing = False
+        self.vc.stop()
+
+        await ctx.send("Skipped the current song!")
