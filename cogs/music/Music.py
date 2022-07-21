@@ -1,5 +1,3 @@
-from asyncio import ProactorEventLoop
-
 import discord
 from youtube_dl import YoutubeDL
 import asyncio
@@ -9,8 +7,9 @@ from utils.DiscordBot import DiscordBot
 
 class Music(DiscordBot.Commands.Cog, name="Music"):
     def __init__(self, bot):
-        self.playing: bool = False
         self.bot = bot
+        self.playing: bool = False
+        self.paused: bool = False
         # Using list because I need random access
         self.songs_queue: list = []
         self.current_index: int = 0
@@ -138,7 +137,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
             song_name = f"{index}) {song['title']}"
 
             if i == self.current_index - 1:
-                song_name = f"\t\t⬐ current track\n{song_name}\n\t\t⬑ current track"
+                song_name = f"\t\t⬐ current track\n{song_name} {'| (paused)' * self.paused}\n\t\t⬑ current track"
 
             queue_list += f"{song_name}\n"
 
@@ -153,6 +152,27 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
             return
 
         self.playing = False
+        self.paused = False
         self.vc.stop()
 
         await ctx.send("Skipped the current song!")
+
+    @DiscordBot.Commands.command(aliases=[], help="Play a song from YouTube")
+    async def pause(self, ctx):
+        if not self.playing:
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.vc.pause()
+        self.paused = True
+        await ctx.send("Paused the current song!")
+
+    @DiscordBot.Commands.command(aliases=[], help="Play a song from YouTube")
+    async def resume(self, ctx):
+        if not self.playing:
+            await ctx.send("Nothing is playing!")
+            return
+
+        self.vc.resume()
+        self.paused = False
+        await ctx.send("Resumed the current song!")
