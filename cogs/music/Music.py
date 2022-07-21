@@ -123,3 +123,25 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
             )
         else:
             await ctx.send("Nothing is playing!")
+
+    @DiscordBot.Commands.command(aliases=["q", "playlist"], help="Show the queue")
+    async def queue(self, ctx):
+        if len(self.songs_queue) == 0:
+            await ctx.send("```nim\nThe queue is empty ;-;\n```")
+            return
+
+        queue_list = "```nim\n"
+
+        for i, song in enumerate(self.songs_queue):
+            index = i + 1
+
+            song_name = f"{index}) {song['title']}"
+
+            if i == self.current_index - 1:
+                song_name = f"\t\t⬐ current track\n{song_name}\n\t\t⬑ current track"
+
+            queue_list += f"{song_name}\n"
+
+        queue_list += "\n\t\tThis is the end of the queue!```"
+
+        await ctx.send(queue_list)
