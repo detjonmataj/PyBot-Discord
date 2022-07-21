@@ -34,6 +34,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
         if ctx.voice_client is None:
             await ctx.send("I'm not in a voice channel!")
             return
+
         self.playing = False
         self.current_index = 0
         self.songs_queue = []
@@ -57,8 +58,6 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
             return
 
         try:
-            self.playing = True
-
             self.vc.play(
                 discord.FFmpegPCMAudio(self.songs_queue[self.current_index]['source'], **{
                     'before_options':
@@ -68,6 +67,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
                 after=lambda x: self.play_music(ctx)
             )
 
+            self.playing = True
             self.current_index += 1
 
             try:
@@ -81,6 +81,8 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
 
     @DiscordBot.Commands.command(aliases=["p"], help="Play a song from YouTube")
     async def play(self, ctx, *args):
+        # TODO: The bot may be in a different voice channel than the one the user is in.
+        #     This should be fixed. Currently, the bot will move to the user's voice channel.
         await self.join(ctx)
 
         song_name = " ".join(args)
