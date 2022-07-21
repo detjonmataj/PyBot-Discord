@@ -145,7 +145,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
 
         await ctx.send(queue_list)
 
-    @DiscordBot.Commands.command(aliases=["s"], help="Skip the currently playing song")
+    @DiscordBot.Commands.command(aliases=["s"], help="Skip the currently playing song.")
     async def skip(self, ctx):
         if not self.playing and self.current_index >= len(self.songs_queue):
             await ctx.send("Nothing is playing!")
@@ -157,20 +157,28 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
 
         await ctx.send("Skipped the current song!")
 
-    @DiscordBot.Commands.command(aliases=[], help="Play a song from YouTube")
+    @DiscordBot.Commands.command(aliases=[], help="Pauses a playing song.")
     async def pause(self, ctx):
         if not self.playing:
             await ctx.send("Nothing is playing!")
+            return
+
+        if self.paused:
+            await ctx.send("The song is already paused!")
             return
 
         self.vc.pause()
         self.paused = True
         await ctx.send("Paused the current song!")
 
-    @DiscordBot.Commands.command(aliases=["unpause"], help="Play a song from YouTube")
+    @DiscordBot.Commands.command(aliases=["unpause"], help="Resumes a paused song.")
     async def resume(self, ctx):
         if not self.playing:
             await ctx.send("Nothing is playing!")
+            return
+
+        if not self.paused:
+            await ctx.send("The song is not paused!")
             return
 
         self.vc.resume()
