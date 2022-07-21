@@ -167,7 +167,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
         self.paused = True
         await ctx.send("Paused the current song!")
 
-    @DiscordBot.Commands.command(aliases=[], help="Play a song from YouTube")
+    @DiscordBot.Commands.command(aliases=["unpause"], help="Play a song from YouTube")
     async def resume(self, ctx):
         if not self.playing:
             await ctx.send("Nothing is playing!")
