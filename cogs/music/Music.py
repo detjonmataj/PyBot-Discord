@@ -1,5 +1,8 @@
+from asyncio import ProactorEventLoop
+
 import discord
 from youtube_dl import YoutubeDL
+import asyncio
 
 from utils.DiscordBot import DiscordBot
 
@@ -12,6 +15,7 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
         self.songs_queue: list = []
         self.current_index: int = 0
         self.vc = None
+        self.loop = asyncio.get_event_loop()
 
     @DiscordBot.Commands.command(help="Ask bot to join your Voice Channel")
     async def join(self, ctx):
@@ -67,6 +71,11 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
 
             self.current_index += 1
 
+            try:
+                asyncio.run_coroutine_threadsafe(self.now_playing(ctx), self.loop)
+            except Exception as ee:
+                print(str(ee))
+
         except Exception as e:
             print(e)
             self.playing = False
@@ -100,3 +109,17 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
                     colour=discord.Colour.blue()
                 )
             )
+
+    @DiscordBot.Commands.command(aliases=["np", "nowplaying"], help="Show the currently playing song")
+    async def now_playing(self, ctx):
+        if self.playing:
+            link = f"https://www.youtube.com/watch?v={self.songs_queue[self.current_index - 1]['id']}"
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Now Playing",
+                    description=f"[{self.songs_queue[self.current_index - 1]['title']}]({link})",
+                    colour=discord.Colour.blue()
+                )
+            )
+        else:
+            await ctx.send("Nothing is playing!")
