@@ -80,12 +80,10 @@ class Music(DiscordBot.Commands.Cog, name="Music"):
             self.playing = False
 
     @DiscordBot.Commands.command(aliases=["p"], help="Play a song from YouTube")
-    async def play(self, ctx, *args):
+    async def play(self, ctx, *, song_name):
         # TODO: The bot may be in a different voice channel than the one the user is in.
         #     This should be fixed. Currently, the bot will move to the user's voice channel.
         await self.join(ctx)
-
-        song_name = " ".join(args)
 
         if song_name == "":
             await ctx.send("Please specify a song name!")
