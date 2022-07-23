@@ -29,3 +29,22 @@ class Main(DiscordBot.Commands.Cog, name="Main"):
         if isinstance(error, DiscordBot.Commands.CommandNotFound):
             await ctx.send("```nim\nCommand not found ;-;\n```")
             return
+
+    @DiscordBot.Commands.Cog.listener()
+    async def on_guild_join(self, guild):
+        self.bot.servers[guild.id] = {
+            "name": guild.name,
+            "id": guild.id,
+            "guild": guild,
+            "Music": {
+                'songs_queue': [],
+                'current_index': 0,
+                'playing': False,
+                'paused': False,
+                'vc': None
+            }
+        }
+
+    @DiscordBot.Commands.Cog.listener()
+    async def on_guild_remove(self, guild):
+        del self.bot.servers[guild.id]
