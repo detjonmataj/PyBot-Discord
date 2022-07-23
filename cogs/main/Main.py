@@ -48,3 +48,19 @@ class Main(DiscordBot.Commands.Cog, name="Main"):
     @DiscordBot.Commands.Cog.listener()
     async def on_guild_remove(self, guild):
         del self.bot.servers[guild.id]
+
+    @DiscordBot.Commands.Cog.listener()
+    async def on_guild_update(self, before, after):
+        del self.bot.servers[before.id]
+        self.bot.servers[after.id] = {
+            "name": after.name,
+            "id": after.id,
+            "guild": after,
+            "Music": {
+                'songs_queue': [],
+                'current_index': 0,
+                'playing': False,
+                'paused': False,
+                'vc': None
+            }
+        }
