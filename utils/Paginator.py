@@ -53,7 +53,7 @@ class Paginator:
 
     async def __edit_embed(self, interaction: Interaction):
         await interaction.edit_origin(
-            embed=self.__get_embed(interaction.user),
+            embed=self.__get_embed(str(interaction.user)),
             components=[
                 [
                     self.components["previous"],
