@@ -53,3 +53,26 @@ class Compiler(DiscordBot.Commands.Cog, name="Compiler"):
             })
 
         await Paginator(ctx=ctx, components_manager=self.bot.components_manager, pages=data, timeout=120).send()
+
+    @DiscordBot.Commands.command(help="Outputs the supported languages")
+    async def languages(self, ctx):
+        languages = CompilerExplorerAPI.get_languages(*['name', 'defaultCompiler'])
+        languages.sort(key=operator.itemgetter('name'))
+        n = 15
+        chunks = [languages[i:i + n] for i in range(0, len(languages), n)]
+
+        data = []
+        for i, chunk in enumerate(chunks):
+            description = ""
+            for j, language in enumerate(chunk):
+                default_compiler = language['defaultCompiler']
+                description += f"**{(i * n) + j + 1})** {language['name']} -> " \
+                               f"**{default_compiler or 'No default compiler'}**\n"
+
+            data.append({
+                'title': f"Supported Languages",
+                'description': description,
+                'colour': discord.Colour.blue()
+            })
+
+        await Paginator(ctx=ctx, components_manager=self.bot.components_manager, pages=data, timeout=120).send()
