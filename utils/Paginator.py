@@ -27,7 +27,7 @@ class Paginator:
             ],
             delete_after=self.delete_after,
         )
-        if self.delete_after is not None:
+        if self.delete_after is None:
             await asyncio.sleep(self.timeout)
             await self.ctx.message.edit(content="Timeout! Pagination will not be interactive.", components=[])
 
