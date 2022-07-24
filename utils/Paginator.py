@@ -17,7 +17,7 @@ class Paginator:
         self.components = self.__setup_components()
 
     async def send(self):
-        await self.ctx.send(
+        message = await self.ctx.send(
             embed=self.__get_embed(self.ctx.message.author),
             components=[
                 [
@@ -29,7 +29,7 @@ class Paginator:
         )
         if self.delete_after is None:
             await asyncio.sleep(self.timeout)
-            await self.ctx.message.edit(content="Timeout! Pagination will not be interactive.", components=[])
+            await message.edit(content="Timeout! Pagination will not be interactive.", components=[])
 
     def __get_embed(self, author: str):
         embed_data = self.pages[self.current_page]
