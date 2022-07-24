@@ -36,7 +36,7 @@ class Paginator:
         embed_data['footer'] = {
             'text': f"Requested by {author} | Page {self.current_page + 1}/{len(self.pages)}",
         }
-        return discord.Embed.from_dict(embed_data)
+        return discord.Embed(**embed_data)
 
     def __setup_components(self):
         components = {
