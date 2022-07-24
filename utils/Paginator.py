@@ -6,7 +6,7 @@ from discord_components import Button, Interaction
 
 class Paginator:
 
-    def __init__(self, ctx, components_manager, pages: list = None, delete_after: int = None, timeout: int = None):
+    def __init__(self, ctx, components_manager, pages: list = None, delete_after: int = None, timeout: int = 60):
         self.components_manager = components_manager
         self.delete_after = delete_after
         self.timeout = timeout
