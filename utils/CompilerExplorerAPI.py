@@ -70,7 +70,7 @@ class CompilerExplorerAPI:
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
         try:
             return requests.post(f"{CompilerExplorerAPI.api_url}/compiler/{compiler_id}/compile", data=json.dumps(data),
-                                 headers=headers)
+                                 headers=headers).json()
         except Exception as e:
             raise "Error while communicating with the compiler-explorer API" from e
 
