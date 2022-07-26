@@ -32,12 +32,12 @@ class CompilerExplorerAPI:
         }).json()
 
     @staticmethod
-    def compile(source_code: str = None, language: str = None, compiler: str = None, compiler_options: str = "",
+    def compile(source_code: str = None, language: str = None, compiler_id: str = None, compiler_options: str = "",
                 args=None,
                 stdin: str = ""):
         if source_code is None:
             raise ValueError("Code is required")
-        if language is None and compiler is None:
+        if language is None and compiler_id is None:
             raise ValueError("Either language or compiler is required")
 
         if args is None:
@@ -45,7 +45,7 @@ class CompilerExplorerAPI:
 
         data = {
             "source": source_code,
-            "compiler": compiler,
+            "compiler": compiler_id,
             "options": {
                 "userArguments": compiler_options,
                 "executeParameters": {
@@ -69,6 +69,7 @@ class CompilerExplorerAPI:
         }
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
         try:
-            return requests.post(f"{CompilerExplorerAPI.api_url}/compile", data=json.dumps(data), headers=headers)
+            return requests.post(f"{CompilerExplorerAPI.api_url}/compiler/{compiler_id}/compile", data=json.dumps(data),
+                                 headers=headers)
         except Exception as e:
             raise "Error while communicating with the compiler-explorer API" from e
