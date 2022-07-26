@@ -85,12 +85,12 @@ class CompilerExplorerAPI:
         languages = CompilerExplorerAPI.get_languages(*['name', 'defaultCompiler'])
         for language in languages:
             if language_or_compiler == language['name'].lower():
-                return language['defaultCompiler']
+                return [language['defaultCompiler'], language['name']]
 
         # check if it is a compiler
         compilers = CompilerExplorerAPI.get_compilers(*['id', 'name', 'lang'])
         for compiler in compilers:
             if language_or_compiler == compiler['id'].lower() or language_or_compiler == compiler['name'].lower():
-                return compiler['id']
+                return [compiler['id'], compiler['lang']]
 
         return None
