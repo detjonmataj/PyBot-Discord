@@ -65,7 +65,6 @@ class CompilerExplorerAPI:
             },
             "lang": language,
             "allowStoreCodeDebug": True,
-            "bypassCache": True
         }
         headers = {"Accept": "application/json", "Content-Type": "application/json"}
         try:
