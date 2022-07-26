@@ -64,3 +64,8 @@ class Main(DiscordBot.Commands.Cog, name="Main"):
                 'vc': None
             }
         }
+
+    @DiscordBot.Commands.command(help="Outputs the bot's ping")
+    async def ping(self, ctx):
+        await ctx.send(f":ping_pong: Pong!"
+                       f"\n\n:heartbeat: {round(self.bot.latency * 1000)}ms")
