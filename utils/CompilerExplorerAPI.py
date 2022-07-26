@@ -73,3 +73,25 @@ class CompilerExplorerAPI:
                                  headers=headers)
         except Exception as e:
             raise "Error while communicating with the compiler-explorer API" from e
+
+    @staticmethod
+    def find_language_or_compiler(language_or_compiler: str = None):
+        if language_or_compiler is None:
+            raise ValueError("Language or compiler is required")
+
+        language_or_compiler = language_or_compiler.strip().lower()
+
+        # check if it is a language
+        languages = CompilerExplorerAPI.get_languages(*['name', 'defaultCompiler'])
+        for language in languages:
+            if language_or_compiler == language['name'].lower():
+                print(language)
+                return language['defaultCompiler']
+
+        # check if it is a compiler
+        compilers = CompilerExplorerAPI.get_compilers(*['id', 'name', 'lang'])
+        for compiler in compilers:
+            if language_or_compiler == compiler['id'].lower() or language_or_compiler == compiler['name'].lower():
+                return compiler['id']
+
+        return None
