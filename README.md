@@ -1,4 +1,4 @@
-# 🤖 PyBot
+# ![Program icon](assets/logo.ico) PyBot
 
 A general purpose Discord bot using [`Discord.py`](https://github.com/Rapptz/discord.py). This can be used to play music from YouTube and compile code snippets. It is great for prototyping ideas, or testing concepts on-the-fly with very little effort. It supports almost every programing language you could name.
 
@@ -131,7 +131,7 @@ To use the bot you need to first add it to your server (currently you have to ho
             PyBot
         ```
 
-## Limitations ⚠️
+## ⚠️ Limitations
 
 Keep in mind that we're working in discord. This means, of course, that we have many operating restraints. Also the [`Compiler Explorer`](https://compiler-explorer.com/) API has some limitations.
 
