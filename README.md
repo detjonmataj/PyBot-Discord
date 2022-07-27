@@ -192,7 +192,7 @@ python3 bot.py
 - [ ] Implement Caching for music and code compilation
 - [ ] Implement games
 - [ ] Implement code contests from my `Contester++` API
-- [ ] Interact with different APIs for improving productivity (Jira, Gitlab, Github, Azure Devops, etc.)
+- [ ] Interact with different APIs for improving productivity (Jira, Gitlab, Github, Azure Devops, Nagios, etc.)
 - [ ] Host the the bot to be used publicly
 - [ ] Refactor code
 - [ ] More ideas before Final Release
