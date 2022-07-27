@@ -2,11 +2,11 @@
 
 A general purpose Discord bot using [`Discord.py`](https://github.com/Rapptz/discord.py). This can be used to play music from YouTube and compile code snippets. It is great for prototyping ideas, or testing concepts on-the-fly with very little effort. It supports almost every programing language you could name.
 
-## Usage
+## 🧑‍🏫 Usage
 
 To use the bot you need to first add it to your server (currently you have to host it yourself). Then you can use the following commands:
 
-### Music
+### 🎵 Music
 
 1. Play music from YouTube
 
@@ -57,7 +57,7 @@ To use the bot you need to first add it to your server (currently you have to ho
     $join
     ```
 
-### Code Compilation
+### 👨‍💻 Code compilation
 
  1. Show supported programming languages
 
@@ -131,7 +131,7 @@ To use the bot you need to first add it to your server (currently you have to ho
             PyBot
         ```
 
-## Limitations
+## Limitations ⚠️
 
 Keep in mind that we're working in discord. This means, of course, that we have many operating restraints. Also the [`Compiler Explorer`](https://compiler-explorer.com/) API has some limitations.
 
@@ -139,8 +139,9 @@ Keep in mind that we're working in discord. This means, of course, that we have 
 
 This project is under the [`MIT license`](https://choosealicense.com/licenses/mit/). Review it [here](LICENSE).
 
-## Hosting it yourself?
+## ☁️ Hosting it yourself?
 
+⚠️
 Before hosting it you must consider some things. In my part everything is fine since I released it under the [`MIT license`](LICENSE), but i suggest to check [`YouTube terms of service`](https://www.youtube.com/t/terms) first.
 
 ### Quick start
@@ -167,19 +168,19 @@ cd PyBot
 
 #### Run the bot
 
-##### Windows
+##### 🪟 Windows
 
 ```shell
 py -3.10-64 bot.py
 ```
 
-##### Linux and MacOS
+##### 🐧 Linux and 🍎 MacOS
 
 ```shell
 python3 bot.py
 ```
 
-## Development Milestones and Future Plans
+## 📝 Development Milestones and Future Plans
 
 - [x] Implement music player
 - [x] Implement code compilation and execution
