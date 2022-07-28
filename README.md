@@ -142,7 +142,7 @@ This project is under the [`MIT license`](https://choosealicense.com/licenses/mi
 ## ☁️ Hosting it yourself?
 
 ⚠️
-Before hosting it you must consider some things. In my part everything is fine since I released it under the [`MIT license`](LICENSE), but i suggest to check [`YouTube terms of service`](https://www.youtube.com/t/terms) first.
+Before hosting it you must consider some things. In my part everything is fine since I released it under the [`MIT license`](LICENSE), but i suggest to check [`YouTube terms of service`](https://www.youtube.com/t/terms) first, if you want to use the implemented music service, since it's hosted by YouTube.
 
 ### Quick start
 
