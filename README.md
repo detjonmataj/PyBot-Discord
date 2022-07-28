@@ -197,3 +197,4 @@ python3 bot.py
 - [ ] Refactor code
 - [ ] More ideas before Final Release
 - [ ] Final Release
+- [ ] Discontinued
