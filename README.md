@@ -156,7 +156,7 @@ cd PyBot
 #### Prerequisites
 
 - Python Python 3.10.5
-  - Check [`Discord.py`](https://discord.py.readthedocs.io/en/latest/api.html#discord-py-version) for more information
+  - Check [`Discord.py`](https://discordpy.readthedocs.io/en/latest/api.html#discord-py-version) for more information
 
 - Install Python Modules specified in the [`requirements.txt`](requirements.txt) file
 
